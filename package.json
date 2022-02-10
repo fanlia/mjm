@@ -1,0 +1,20 @@
+{
+  "name": "mjm",
+  "version": "1.0.0",
+  "description": "mckeeman form parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanlia/mjm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fanlia/mjm/issues"
+  },
+  "homepage": "https://github.com/fanlia/mjm#readme"
+}
