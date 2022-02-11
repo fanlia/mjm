@@ -324,7 +324,6 @@ const range = {
         dot,
         space,
         singleton,
-        excludes,
     ],
 }
 
@@ -346,7 +345,13 @@ const characters = {
 const literal = {
     type: 'or',
     predict: [
-        range,
+        {
+            type: 'and',
+            predict: [
+                range,
+                excludes,
+            ],
+        },
         singleton,
         characters,
     ],
