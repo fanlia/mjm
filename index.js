@@ -414,7 +414,7 @@ const rule = {
         nothing,
         alternatives,
     ],
-    format: ([name, newline, nothing, alternatives]) => ({name, nothing: nothing.ok, alternatives}),
+    format: ([name, newline, nothing, alternatives]) => ({name: name.name, nothing: nothing.ok, alternatives}),
 }
 
 const rules = {
