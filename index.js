@@ -40,7 +40,7 @@ class Parser {
         if (!option && typeof option !== 'object') {
             throw new Error('invalid parse option')
         }
-        let {type, predict, fn} = option
+        let {type, predict, fn, format} = option
         if (!type) {
             throw new Error('parse type required')
         }
@@ -79,6 +79,8 @@ class Parser {
 
         if (!result.ok) {
             this.index = index
+        } else if (typeof format === 'function' && result.data) {
+            result.data = format(result.data)
         }
 
         return result
@@ -158,7 +160,13 @@ class Parser {
     }
 
     parse (predict) {
-        return this.any(predict)
+        const result = this.any(predict)
+
+        return {
+            result,
+            index: this.index,
+            length: this.source.length,
+        }
     }
 }
 
@@ -184,6 +192,7 @@ const letter = {
 const name = {
     type: 'many',
     predict: letter,
+    format: d => ({name: d.join('')}),
 }
 
 const indentation = {
@@ -246,6 +255,7 @@ const hex4 = {
         predict: hex,
         len: 4,
     },
+    format: d => d.join(''),
 }
 
 const hex5 = {
@@ -254,6 +264,7 @@ const hex5 = {
         hex,
         hex4,
     ],
+    format: d => d[0] + d[1],
 }
 
 const hex6 = {
@@ -262,9 +273,11 @@ const hex6 = {
         {
             type: 'chars',
             predict: ['1', '0'],
+            format: d => d.join(''),
         },
         hex4,
     ],
+    format: d => d[0] + d[1],
 }
 
 const hexcode = {
@@ -291,6 +304,7 @@ const singleton = {
         codepoint,
         single_quote,
     ],
+    format: d => ({singleton: d[1]}),
 }
 
 const exclude = {
@@ -306,6 +320,7 @@ const exclude = {
         },
     ]),
     fn: true,
+    format: d => d[1],
 }
 
 const excludes = {
@@ -325,6 +340,7 @@ const range = {
         space,
         singleton,
     ],
+    format: ([start, s1, dot, s2, end]) => ({start: start.singleton, end: end.singleton})
 }
 
 const characters = {
@@ -340,6 +356,7 @@ const characters = {
         },
         double_quote,
     ],
+    format: d => ({characters: d[1].join('')}),
 }
 
 const literal = {
@@ -351,6 +368,7 @@ const literal = {
                 range,
                 excludes,
             ],
+            format: ([range, exclues]) => ({range, exclues: exclues.data})
         },
         singleton,
         characters,
@@ -380,6 +398,7 @@ const alternative = {
         items,
         newline,
     ],
+    format: ([indentation, items, newline]) => items,
 }
 
 const alternatives = {
@@ -395,6 +414,7 @@ const rule = {
         nothing,
         alternatives,
     ],
+    format: ([name, newline, nothing, alternatives]) => ({name, nothing: nothing.ok, alternatives}),
 }
 
 const rules = {
@@ -422,6 +442,7 @@ const grammar = {
         whitespace,
         rules,
     ],
+    format: (d) => d[1],
 }
 
 const parse = (source) => {
