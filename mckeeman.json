@@ -72,7 +72,7 @@
                   "char": "z"
                 }
               },
-              "exclues": []
+              "exclude": []
             }
           ],
           [
@@ -85,7 +85,7 @@
                   "char": "Z"
                 }
               },
-              "exclues": []
+              "exclude": []
             }
           ],
           [
@@ -326,7 +326,7 @@
                   "hexcode": "10FFFF"
                 }
               },
-              "exclues": []
+              "exclude": []
             }
           ],
           [
@@ -404,7 +404,7 @@
                   "char": "9"
                 }
               },
-              "exclues": []
+              "exclude": []
             }
           ],
           [
@@ -417,7 +417,7 @@
                   "char": "F"
                 }
               },
-              "exclues": []
+              "exclude": []
             }
           ]
         ]
@@ -524,7 +524,7 @@
                   "hexcode": "10FFFF"
                 }
               },
-              "exclues": [
+              "exclude": [
                 {
                   "singleton": {
                     "char": "\""

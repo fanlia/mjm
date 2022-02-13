@@ -1,139 +1,107 @@
 
-const SPACE = '\u0020'
-const NEWLINE = '\u000A'
-const SINGLE_QUOTE = '\''
-const DOUBLE_QUOTE = '"'
-const DOT = '.'
-
-function isLetter (ch) {
-    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch === '_'
-}
-
-function isHex (ch) {
-    return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z')
-}
-
-const letter = {
-    type: 'char',
-    predict: isLetter,
-}
-
-const name = {
-    type: 'many',
-    predict: letter,
-    format: d => ({name: d.join('')}),
-}
-
-const indentation = {
-    type: 'chars',
-    predict: [
-        SPACE, SPACE, SPACE, SPACE,
-    ],
-}
-
-const nothing = {
-    type: 'maybe',
-    predict: {
-        type: 'chars',
-        predict: [
-            SPACE, SPACE, SPACE, SPACE,
-            DOUBLE_QUOTE, DOUBLE_QUOTE,
-            NEWLINE,
-        ],
-    },
-}
-
 const space = {
     type: 'chars',
-    predict: [SPACE],
+    predict: [' '],
 }
 
 const newline = {
     type: 'chars',
-    predict: [NEWLINE],
+    predict: ['\n'],
 }
 
-const dot = {
-    type: 'chars',
-    predict: [DOT],
+const letter = {
+    type: 'char',
+    predict: ch => (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch === '_',
+}
+
+const indentation = {
+    type: 'and',
+    predict: [
+        space,
+        space,
+        space,
+        space,
+    ],
+}
+
+const character = {
+    type: 'char',
+    predict: ch => (ch >= ' ' && ch.codePointAt(0) <= 0x10FFFF) && (ch !== '"'),
+}
+
+const characters = {
+    type: 'many',
+    predict: character,
 }
 
 const hex = {
     type: 'char',
-    predict: isHex,
-}
-
-const single_quote = {
-    type: 'chars',
-    predict: [SINGLE_QUOTE],
-}
-
-const double_quote = {
-    type: 'chars',
-    predict: [DOUBLE_QUOTE],
-}
-
-const any_char = {
-    type: 'char',
-    predict: () => true,
-    format: ch => ({char: ch}),
-}
-
-const hex4 = {
-    type: 'limit',
-    predict: {
-        predict: hex,
-        len: 4,
-    },
-    format: d => d.join(''),
-}
-
-const hex5 = {
-    type: 'and',
-    predict: [
-        hex,
-        hex4,
-    ],
-    format: d => d[0] + d[1],
-}
-
-const hex6 = {
-    type: 'and',
-    predict: [
-        {
-            type: 'chars',
-            predict: ['1', '0'],
-            format: d => d.join(''),
-        },
-        hex4,
-    ],
-    format: d => d[0] + d[1],
+    predict: ch => (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z'),
 }
 
 const hexcode = {
     type: 'or',
     predict: [
-        hex6,
-        hex5,
-        hex4,
+        {
+            type: 'and',
+            predict: [
+                {
+                    type: 'chars',
+                    predict: ['1', '0'],
+                },
+                hex,
+                hex,
+                hex,
+                hex,
+            ],
+        },
+        {
+            type: 'and',
+            predict: [
+                hex,
+                hex,
+                hex,
+                hex,
+                hex,
+            ],
+        },
+        {
+            type: 'and',
+            predict: [
+                hex,
+                hex,
+                hex,
+                hex,
+            ],
+        },
     ],
-    format: d => ({hexcode: d}),
+    format: d => ({hexcode: [].concat(...d).join('')}),
 }
 
 const codepoint = {
     type: 'or',
     predict: [
         hexcode,
-        any_char,
+        {
+            type: 'char',
+            predict: ch => ch >= ' ' && ch.codePointAt(0) <= 0x10FFFF,
+            format: ch => ({char: ch}),
+        },
     ],
 }
 
 const singleton = {
     type: 'and',
     predict: [
-        single_quote,
+        {
+            type: 'chars',
+            predict: ['\''],
+        },
         codepoint,
-        single_quote,
+        {
+            type: 'chars',
+            predict: ['\''],
+        },
     ],
     format: d => ({singleton: d[1]}),
 }
@@ -143,7 +111,10 @@ const range = {
     predict: [
         singleton,
         space,
-        dot,
+        {
+            type: 'chars',
+            predict: ['.'],
+        },
         space,
         singleton,
     ],
@@ -151,42 +122,40 @@ const range = {
 }
 
 const exclude = {
-    type: 'and',
-    predict: [
-        {
-            type: 'chars',
-            predict: [SPACE, '-', SPACE],
-        },
-        {
-            type: 'or',
-            predict: [range, singleton],
-        },
-    ],
-    format: d => d[1],
-}
-
-const excludes = {
     type: 'maybe',
     predict: {
         type: 'many',
-        predict: exclude,
-    },
-}
-
-const characters = {
-    type: 'and',
-    predict: [
-        double_quote,
-        {
-            type: 'many',
-            predict: {
-                type: 'char',
-                predict: ch => ch !== DOUBLE_QUOTE,
-            },
+        predict: {
+            type: 'or',
+            predict: [
+                {
+                    type: 'and',
+                    predict: [
+                        space,
+                        {
+                            type: 'chars',
+                            predict: ['-'],
+                        },
+                        space,
+                        range,
+                    ],
+                },
+                {
+                    type: 'and',
+                    predict: [
+                        space,
+                        {
+                            type: 'chars',
+                            predict: ['-'],
+                        },
+                        space,
+                        singleton,
+                    ],
+                },
+            ],
+            format: d => d[3],
         },
-        double_quote,
-    ],
-    format: d => ({characters: d[1].join('')}),
+    },
 }
 
 const literal = {
@@ -196,13 +165,33 @@ const literal = {
             type: 'and',
             predict: [
                 range,
-                excludes,
+                exclude,
             ],
-            format: ([range, exclues]) => ({range, exclues: exclues.data})
+            format: ([range, exclude]) => ({range, exclude: exclude.data})
         },
         singleton,
-        characters,
+        {
+            type: 'and',
+            predict: [
+                {
+                    type: 'chars',
+                    predict: ['"'],
+                },
+                characters,
+                {
+                    type: 'chars',
+                    predict: ['"'],
+                },
+            ],
+            format: d => ({characters: d[1].join('')}),
+        },
     ],
+}
+
+const name = {
+    type: 'many',
+    predict: letter,
+    format: d => ({name: d.join('')}),
 }
 
 const item = {
@@ -236,6 +225,25 @@ const alternatives = {
     predict: alternative,
 }
 
+const nothing = {
+    type: 'maybe',
+    predict: {
+        type: 'and',
+        predict: [
+            indentation,
+            {
+                type: 'chars',
+                predict: ['"'],
+            },
+            {
+                type: 'chars',
+                predict: ['"'],
+            },
+            newline,
+        ],
+    },
+}
+
 const rule = {
     type: 'and',
     predict: [
@@ -261,7 +269,7 @@ const whitespace = {
         type: 'many',
         predict: {
             type: 'char',
-            predict: ch => !isLetter(ch),
+            predict: ch => !letter.predict(ch),
         },
     },
 }
