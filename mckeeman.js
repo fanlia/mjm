@@ -76,6 +76,7 @@ const double_quote = {
 const any_char = {
     type: 'char',
     predict: () => true,
+    format: ch => ({char: ch}),
 }
 
 const hex4 = {
@@ -116,6 +117,7 @@ const hexcode = {
         hex5,
         hex4,
     ],
+    format: d => ({hexcode: d}),
 }
 
 const codepoint = {

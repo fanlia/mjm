@@ -19,7 +19,9 @@
         "alternatives": [
           [
             {
-              "singleton": "0020"
+              "singleton": {
+                "hexcode": "0020"
+              }
             }
           ]
         ]
@@ -30,7 +32,9 @@
         "alternatives": [
           [
             {
-              "singleton": "000A"
+              "singleton": {
+                "hexcode": "000A"
+              }
             }
           ]
         ]
@@ -61,8 +65,12 @@
           [
             {
               "range": {
-                "start": "a",
-                "end": "z"
+                "start": {
+                  "char": "a"
+                },
+                "end": {
+                  "char": "z"
+                }
               },
               "exclues": []
             }
@@ -70,15 +78,21 @@
           [
             {
               "range": {
-                "start": "A",
-                "end": "Z"
+                "start": {
+                  "char": "A"
+                },
+                "end": {
+                  "char": "Z"
+                }
               },
               "exclues": []
             }
           ],
           [
             {
-              "singleton": "_"
+              "singleton": {
+                "char": "_"
+              }
             }
           ]
         ]
@@ -154,10 +168,14 @@
               "name": "indentation"
             },
             {
-              "singleton": "\""
+              "singleton": {
+                "char": "\""
+              }
             },
             {
-              "singleton": "\""
+              "singleton": {
+                "char": "\""
+              }
             },
             {
               "name": "newline"
@@ -258,13 +276,17 @@
           ],
           [
             {
-              "singleton": "\""
+              "singleton": {
+                "char": "\""
+              }
             },
             {
               "name": "characters"
             },
             {
-              "singleton": "\""
+              "singleton": {
+                "char": "\""
+              }
             }
           ]
         ]
@@ -275,13 +297,17 @@
         "alternatives": [
           [
             {
-              "singleton": "'"
+              "singleton": {
+                "char": "'"
+              }
             },
             {
               "name": "codepoint"
             },
             {
-              "singleton": "'"
+              "singleton": {
+                "char": "'"
+              }
             }
           ]
         ]
@@ -293,8 +319,12 @@
           [
             {
               "range": {
-                "start": " ",
-                "end": "10FFFF"
+                "start": {
+                  "char": " "
+                },
+                "end": {
+                  "hexcode": "10FFFF"
+                }
               },
               "exclues": []
             }
@@ -367,8 +397,12 @@
           [
             {
               "range": {
-                "start": "0",
-                "end": "9"
+                "start": {
+                  "char": "0"
+                },
+                "end": {
+                  "char": "9"
+                }
               },
               "exclues": []
             }
@@ -376,8 +410,12 @@
           [
             {
               "range": {
-                "start": "A",
-                "end": "F"
+                "start": {
+                  "char": "A"
+                },
+                "end": {
+                  "char": "F"
+                }
               },
               "exclues": []
             }
@@ -396,7 +434,9 @@
               "name": "space"
             },
             {
-              "singleton": "."
+              "singleton": {
+                "char": "."
+              }
             },
             {
               "name": "space"
@@ -416,7 +456,9 @@
               "name": "space"
             },
             {
-              "singleton": "-"
+              "singleton": {
+                "char": "-"
+              }
             },
             {
               "name": "space"
@@ -433,7 +475,9 @@
               "name": "space"
             },
             {
-              "singleton": "-"
+              "singleton": {
+                "char": "-"
+              }
             },
             {
               "name": "space"
@@ -473,12 +517,18 @@
           [
             {
               "range": {
-                "start": " ",
-                "end": "10FFFF"
+                "start": {
+                  "char": " "
+                },
+                "end": {
+                  "hexcode": "10FFFF"
+                }
               },
               "exclues": [
                 {
-                  "singleton": "\""
+                  "singleton": {
+                    "char": "\""
+                  }
                 }
               ]
             }
