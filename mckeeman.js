@@ -136,30 +136,6 @@ const singleton = {
     format: d => ({singleton: d[1]}),
 }
 
-const exclude = {
-    type: 'and',
-    predict: () => ([
-        {
-            type: 'chars',
-            predict: [SPACE, '-', SPACE],
-        },
-        {
-            type: 'or',
-            predict: [range, singleton],
-        },
-    ]),
-    fn: true,
-    format: d => d[1],
-}
-
-const excludes = {
-    type: 'maybe',
-    predict: {
-        type: 'many',
-        predict: exclude,
-    },
-}
-
 const range = {
     type: 'and',
     predict: [
@@ -170,6 +146,29 @@ const range = {
         singleton,
     ],
     format: ([start, s1, dot, s2, end]) => ({start: start.singleton, end: end.singleton})
+}
+
+const exclude = {
+    type: 'and',
+    predict: [
+        {
+            type: 'chars',
+            predict: [SPACE, '-', SPACE],
+        },
+        {
+            type: 'or',
+            predict: [range, singleton],
+        },
+    ],
+    format: d => d[1],
+}
+
+const excludes = {
+    type: 'maybe',
+    predict: {
+        type: 'many',
+        predict: exclude,
+    },
 }
 
 const characters = {

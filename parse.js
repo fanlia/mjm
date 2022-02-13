@@ -40,7 +40,7 @@ class Parser {
         if (!option && typeof option !== 'object') {
             throw new Error('invalid parse option')
         }
-        let {type, predict, fn, format} = option
+        let {type, predict, format} = option
         if (!type) {
             throw new Error('parse type required')
         }
@@ -50,10 +50,6 @@ class Parser {
 
         const index = this.index
         let result = null
-
-        if (fn) {
-            predict = predict()
-        }
 
         if (type === 'char') {
             result = this.char(predict)
