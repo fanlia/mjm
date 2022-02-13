@@ -1,0 +1,492 @@
+{
+  "result": {
+    "ok": true,
+    "data": [
+      {
+        "name": "grammar",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "rules"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "space",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "singleton": "0020"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "newline",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "singleton": "000A"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "name",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "letter"
+            }
+          ],
+          [
+            {
+              "name": "letter"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "letter",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "range": {
+                "start": "a",
+                "end": "z"
+              },
+              "exclues": []
+            }
+          ],
+          [
+            {
+              "range": {
+                "start": "A",
+                "end": "Z"
+              },
+              "exclues": []
+            }
+          ],
+          [
+            {
+              "singleton": "_"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "indentation",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "space"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "space"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "rules",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "rule"
+            }
+          ],
+          [
+            {
+              "name": "rule"
+            },
+            {
+              "name": "newline"
+            },
+            {
+              "name": "rules"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "rule",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "name"
+            },
+            {
+              "name": "newline"
+            },
+            {
+              "name": "nothing"
+            },
+            {
+              "name": "alternatives"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "nothing",
+        "nothing": true,
+        "alternatives": [
+          [
+            {
+              "name": "indentation"
+            },
+            {
+              "singleton": "\""
+            },
+            {
+              "singleton": "\""
+            },
+            {
+              "name": "newline"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "alternatives",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "alternative"
+            }
+          ],
+          [
+            {
+              "name": "alternative"
+            },
+            {
+              "name": "alternatives"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "alternative",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "indentation"
+            },
+            {
+              "name": "items"
+            },
+            {
+              "name": "newline"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "items",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "item"
+            }
+          ],
+          [
+            {
+              "name": "item"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "items"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "item",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "literal"
+            }
+          ],
+          [
+            {
+              "name": "name"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "literal",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "singleton"
+            }
+          ],
+          [
+            {
+              "name": "range"
+            },
+            {
+              "name": "exclude"
+            }
+          ],
+          [
+            {
+              "singleton": "\""
+            },
+            {
+              "name": "characters"
+            },
+            {
+              "singleton": "\""
+            }
+          ]
+        ]
+      },
+      {
+        "name": "singleton",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "singleton": "'"
+            },
+            {
+              "name": "codepoint"
+            },
+            {
+              "singleton": "'"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "codepoint",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "range": {
+                "start": " ",
+                "end": "10FFFF"
+              },
+              "exclues": []
+            }
+          ],
+          [
+            {
+              "name": "hexcode"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "hexcode",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "characters": "10"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            }
+          ],
+          [
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            }
+          ],
+          [
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            },
+            {
+              "name": "hex"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "hex",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "range": {
+                "start": "0",
+                "end": "9"
+              },
+              "exclues": []
+            }
+          ],
+          [
+            {
+              "range": {
+                "start": "A",
+                "end": "F"
+              },
+              "exclues": []
+            }
+          ]
+        ]
+      },
+      {
+        "name": "range",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "singleton"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "singleton": "."
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "singleton"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "exclude",
+        "nothing": true,
+        "alternatives": [
+          [
+            {
+              "name": "space"
+            },
+            {
+              "singleton": "-"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "singleton"
+            },
+            {
+              "name": "exclude"
+            }
+          ],
+          [
+            {
+              "name": "space"
+            },
+            {
+              "singleton": "-"
+            },
+            {
+              "name": "space"
+            },
+            {
+              "name": "range"
+            },
+            {
+              "name": "exclude"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "characters",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "name": "character"
+            }
+          ],
+          [
+            {
+              "name": "character"
+            },
+            {
+              "name": "characters"
+            }
+          ]
+        ]
+      },
+      {
+        "name": "character",
+        "nothing": false,
+        "alternatives": [
+          [
+            {
+              "range": {
+                "start": " ",
+                "end": "10FFFF"
+              },
+              "exclues": [
+                {
+                  "singleton": "\""
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "index": 945,
+  "length": 945
+}
