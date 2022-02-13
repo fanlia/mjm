@@ -1,5 +1,6 @@
 
 const parse = require('./parse')
+const mckeeman = require('./mckeeman')
 
 const source = `
 start
@@ -25,6 +26,8 @@ digit
     '0' . '9'
 
 `
+
+console.log(JSON.stringify(parse(source, mckeeman), null, 2))
 
 const start = {
     type: "or",
