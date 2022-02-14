@@ -72,8 +72,8 @@ range
 
 exclude
     ""
-    space '-' space singleton exclude
     space '-' space range exclude
+    space '-' space singleton exclude
 
 characters
     character
