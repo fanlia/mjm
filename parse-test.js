@@ -1,6 +1,6 @@
 
 const fs = require('fs')
-const parse = require('.')
+const { parse } = require('.')
 
 const source = fs.readFileSync('mckeeman.grammar', 'utf8')
 

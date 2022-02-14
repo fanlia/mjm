@@ -4,7 +4,7 @@
   "description": "mckeeman form parser",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node parse-test.js"
   },
   "repository": {
     "type": "git",
