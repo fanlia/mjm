@@ -19,7 +19,7 @@ class Parser {
 
     char (predict) {
         const ch = this.peek()
-        if (predict(ch)) {
+        if (ch !== undefined && predict(ch)) {
             this.next()
             return { ok: true, data: ch }
         } else {

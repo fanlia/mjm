@@ -1,7 +1,12 @@
 
 const stringifySingleton = (singleton, op) => {
     if (singleton.char) {
-        const char = singleton.char === '\'' ? '\\\'' : singleton.char
+        let char = singleton.char
+        if (char === '\'') {
+            char = '\\\''
+        } else if (char === '\\') {
+            char = '\\\\'
+        }
         return `ch ${op} '${char}'`
     } else if (singleton.hexcode) {
         return `ch.codePointAt(0) ${op} 0x${singleton.hexcode}`

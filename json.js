@@ -1,5 +1,6 @@
 
-const parse = require('.')
+const parse = require('./parse')
+const mjm = require('.')
 
 const source = `
 json
@@ -106,6 +107,11 @@ ws
 
 `
 
-const result = parse(source)
+const script = mjm.stringify(source)
 
-console.log(JSON.stringify(result, null, 2))
+console.log(script)
+
+const start = new Function(`let module = {}\n${script}\nreturn module.exports`)()
+
+console.log(JSON.stringify(parse('{"hello": [1.1, true, "world"]}', start), null, 2))
+
