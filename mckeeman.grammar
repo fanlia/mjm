@@ -47,16 +47,16 @@ item
     name
 
 literal
-    singleton
     range exclude
+    singleton
     '"' characters '"'
 
 singleton
     ''' codepoint '''
 
 codepoint
-    ' ' . '10FFFF'
     hexcode
+    ' ' . '10FFFF'
 
 hexcode
     "10" hex hex hex hex

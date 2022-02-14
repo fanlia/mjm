@@ -263,15 +263,15 @@
         "alternatives": [
           [
             {
-              "name": "singleton"
-            }
-          ],
-          [
-            {
               "name": "range"
             },
             {
               "name": "exclude"
+            }
+          ],
+          [
+            {
+              "name": "singleton"
             }
           ],
           [
@@ -318,6 +318,11 @@
         "alternatives": [
           [
             {
+              "name": "hexcode"
+            }
+          ],
+          [
+            {
               "range": {
                 "start": {
                   "char": " "
@@ -327,11 +332,6 @@
                 }
               },
               "exclude": []
-            }
-          ],
-          [
-            {
-              "name": "hexcode"
             }
           ]
         ]
