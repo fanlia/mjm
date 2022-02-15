@@ -51,8 +51,6 @@ const stringifyItem = (item) => {
     }
 }
 
-const convert = alternatives => alternatives.map(d => d.map(alternatives))
-
 const isEqual = (itemA, itemB) => itemA.type === itemB.type && itemA.data === itemB.data
 
 const isEqualName = (item, name) => item.type === 'name' && item.data === name
