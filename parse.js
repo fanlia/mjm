@@ -58,8 +58,6 @@ class Parser {
             result = this.char(predict)
         } else if (type === 'chars') {
             result = this.chars(predict)
-        } else if (type === 'limit') {
-            result = this.limit(predict)
         } else if (type === 'many') {
             result = this.many(predict)
         } else if (type === 'until') {
@@ -83,18 +81,6 @@ class Parser {
         }
 
         return result
-    }
-
-    limit ({ predict, len }) {
-        const results = []
-
-        for (let i = 0; i < len; i++) {
-            const result = this.any(predict)
-            if (!result.ok) break
-            results.push(result.data)
-        }
-
-        return { ok: results.length === len, data: results }
     }
 
     many (predict) {
