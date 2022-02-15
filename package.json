@@ -4,17 +4,20 @@
   "description": "mckeeman form parser",
   "main": "index.js",
   "scripts": {
-    "test": "node parse-test.js"
+    "test": "./cli.js test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fanlia/mjm.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["mckeeman", "form", "parser"],
+  "author": "fanlia",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/fanlia/mjm/issues"
+  },
+  "bin": {
+    "mjm": "./cli.js"
   },
   "homepage": "https://github.com/fanlia/mjm#readme"
 }

@@ -1,0 +1,23 @@
+
+start
+    additive
+
+additive
+    multiplicative '+' additive
+    multiplicative
+
+multiplicative
+    primary '*' multiplicative
+    primary
+
+primary
+    integer
+    '(' additive ')'
+
+integer
+    digit
+    digit integer
+
+digit
+    '0' . '9'
+
