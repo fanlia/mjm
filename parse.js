@@ -5,22 +5,13 @@ class Parser {
         this.index = 0
     }
 
-    peek () {
-        return this.source[this.index]
-    }
-
-    next () {
-        if (this.index < this.source.length) {
-            this.index++
-        } else {
-            throw new Error('unexpected end')
-        }
-    }
-
     char (predict) {
-        const ch = this.peek()
-        if (ch !== undefined && predict(ch)) {
-            this.next()
+        if (this.index >= this.source.length) {
+            return { ok: false, data: null }
+        }
+        const ch = this.source[this.index]
+        if (predict(ch)) {
+            this.index++
             return { ok: true, data: ch }
         } else {
             return { ok: false, data: ch }
