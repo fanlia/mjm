@@ -51,23 +51,6 @@ const stringifyItem = (item) => {
     }
 }
 
-const isEqual = (itemA, itemB) => itemA.type === itemB.type && itemA.data === itemB.data
-
-const isEqualName = (item, name) => item.type === 'name' && item.data === name
-
-const isMany1 = (alternatives, name) => {
-    return alternatives.length === 2
-        && alternatives[0].length === 2
-        && alternatives[1].length === 1
-        && alternatives[0][0].type === 'name'
-        && isEqual(alternatives[0][0], alternatives[1][0])
-        && isEqualName(alternatives[0][1], name)
-}
-
-const isMany2 = (alternatives, name) => {
-    return alternatives.length >= 2 && alternatives.every(alternative => isEqualName(alternative.at(-1), name))
-}
-
 const space4 = ' '.repeat(4)
 const space8 = ' '.repeat(8)
 const space12 = ' '.repeat(12)
@@ -114,18 +97,7 @@ const stringifyRule = (rule) => {
 
     let script = `const ${name} = `
 
-    let body = null
-
-    if (isMany1(alternatives, name)) {
-        const [ item ] = alternatives[0]
-        body = `{type: "many", predict: () => ${item.data}, fn: true}`
-    } else if (isMany2(alternatives, name)) {
-        alternatives = alternatives.map(d => d.slice(0, -1))
-        const predict = stringifyAlternatives(alternatives)
-        body = `{type: "many", predict: ${predict}}`
-    } else {
-        body = stringifyAlternatives(alternatives)
-    }
+    let body = stringifyAlternatives(alternatives)
 
     if (nothing) {
         body = `{type: 'maybe', predict: ${body}}`
