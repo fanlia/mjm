@@ -68,15 +68,6 @@ const isMany2 = (alternatives, name) => {
     return alternatives.length >= 2 && alternatives.every(alternative => isEqualName(alternative.at(-1), name))
 }
 
-const isMany3 = (alternatives, name) => {
-    return alternatives.length === 2
-        && alternatives[0].length === 3
-        && alternatives[1].length === 1
-        && alternatives[0][0].type === 'name'
-        && isEqual(alternatives[0][0], alternatives[1][0])
-        && isEqualName(alternatives[0][2], name)
-}
-
 const space4 = ' '.repeat(4)
 const space8 = ' '.repeat(8)
 const space12 = ' '.repeat(12)
@@ -128,10 +119,6 @@ const stringifyRule = (rule) => {
     if (isMany1(alternatives, name)) {
         const [ item ] = alternatives[0]
         body = `{type: "many", predict: () => ${item.data}, fn: true}`
-    } else if (isMany3(alternatives, name)) {
-        alternatives = [alternatives[0].slice(0, 2), alternatives[1]]
-        const predict = stringifyAlternatives(alternatives)
-        body = `{type: "many", predict: ${predict}}`
     } else if (isMany2(alternatives, name)) {
         alternatives = alternatives.map(d => d.slice(0, -1))
         const predict = stringifyAlternatives(alternatives)
