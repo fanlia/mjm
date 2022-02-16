@@ -93,7 +93,7 @@ const stringifyAlternatives = (alternatives) => {
         if (hasName) {
             return `{\n${space4}type: "and",\n${space4}predict: () => ([\n${space8}${andPredict},\n${space4}]),\n${space4}fn: true,\n}`
         } else {
-            return `{\n${space4}type: "and",\n${space4}predict: [\n${space8}${andPredict},\n${space4}]\n}`
+            return `{\n${space4}type: "and",\n${space4}predict: [\n${space8}${andPredict},\n${space4}],\n}`
         }
     }
     const orPredict = alternatives
@@ -102,14 +102,14 @@ const stringifyAlternatives = (alternatives) => {
             return `${space8}${items[0].data}`
         }
         const andPredict = items.map(item => item.data).join(`,\n${space16}`)
-        return `${space8}{\n${space12}type: "and",\n${space12}predict: [\n${space16}${andPredict},\n${space12}]\n${space8}}`
+        return `${space8}{\n${space12}type: "and",\n${space12}predict: [\n${space16}${andPredict},\n${space12}],\n${space8}}`
     })
     .join(',\n')
 
     if (hasName) {
         return `{\n${space4}type: "or",\n${space4}predict: () => ([\n${orPredict},\n${space4}]),\n${space4}fn: true,\n}`
     } else {
-        return `{\n${space4}type: "or",\n${space4}predict: [\n${orPredict},\n${space4}]\n}`
+        return `{\n${space4}type: "or",\n${space4}predict: [\n${orPredict},\n${space4}],\n}`
     }
 }
 
