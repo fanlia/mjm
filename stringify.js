@@ -73,6 +73,7 @@ const isUntil = (alternatives, name) => {
         && alternatives[0].length === 3
         && alternatives[1].length === 1
         && alternatives[0][0].type === 'name'
+        && alternatives[0][1].type === 'name'
         && isEqual(alternatives[0][0], alternatives[1][0])
         && isEqualName(alternatives[0][2], name)
 }
