@@ -93,8 +93,6 @@ const stringifyRule = (rule) => {
 
     alternatives = alternatives.sort((a, b) => b.length - a.length).map(alternative => alternative.map(stringifyItem))
 
-    const noName = alternatives.every(alternative => alternative.every(item => item.type !== 'name'))
-
     let script = `const ${name} = `
 
     let body = stringifyAlternatives(alternatives)
