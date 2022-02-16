@@ -51,8 +51,6 @@ class Parser {
             result = this.chars(predict)
         } else if (type === 'many') {
             result = this.many(predict)
-        } else if (type === 'until') {
-            result = this.until(predict)
         } else if (type === 'maybe') {
             result = this.maybe(predict)
         } else if (type === 'and') {
