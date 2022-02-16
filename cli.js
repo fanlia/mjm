@@ -40,7 +40,7 @@ exports.stringify = (source) => {
 let [cmd, ...cmdargs] = args
 
 if (cmd === 'parse') {
-    let [ grammarFile, grammarJS ] = cmdargs
+    let [ grammarFile, grammarJS, isFile = '-file'] = cmdargs
     if (!grammarFile) {
         helpexit()
     }
@@ -48,7 +48,7 @@ if (cmd === 'parse') {
     if (grammarJS) {
         grammar = require(grammarJS)
     }
-    const source = fs.readFileSync(grammarFile, 'utf8')
+    const source = isFile !== '-file' ? grammarFile : fs.readFileSync(grammarFile, 'utf8')
     const result = mjm.parse(source, grammar)
     const resultStr = JSON.stringify(result, null, 2)
     console.log(resultStr)

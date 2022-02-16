@@ -86,20 +86,6 @@ class Parser {
         return { ok: results.length > 0, data: results }
     }
 
-    until ({predict, hasNextPredict}) {
-        const results = []
-
-        while (true) {
-            const result = this.any(predict)
-            if (!result.ok) break
-            results.push(result.data)
-            const hasNext = this.any(hasNextPredict)
-            if (!hasNext.ok) break
-        }
-
-        return { ok: results.length > 0, data: results }
-    }
-
     maybe (predict) {
         return {
             ok: true,

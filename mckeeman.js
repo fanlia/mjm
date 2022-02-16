@@ -45,14 +45,21 @@ const indentation = {
     fn: true,
 }
 
-const rules = {
-    type: 'until',
-    predict: () => ({
-        predict: rule,
-        hasNextPredict: newline,
-    }),
+const rules = {type: "many", predict: {
+    type: "or",
+    predict: () => ([
+        {
+            type: "and",
+            predict: [
+                rule,
+                newline,
+            ],
+            format: d => d[0],
+        },
+        rule,
+    ]),
     fn: true,
-}
+}}
 
 const rule = {
     type: 'and',
@@ -103,14 +110,21 @@ const alternative = {
     format: ([indentation, items, newline]) => items,
 }
 
-const items = {
-    type: 'until',
-    predict: () => ({
-        predict: item,
-        hasNextPredict: space,
-    }),
+const items = {type: "many", predict: {
+    type: "or",
+    predict: () => ([
+        {
+            type: "and",
+            predict: [
+                item,
+                space,
+            ],
+            format: d => d[0],
+        },
+        item,
+    ]),
     fn: true,
-}
+}}
 
 const item = {
     type: 'or',

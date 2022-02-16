@@ -73,7 +73,6 @@ const isUntil = (alternatives, name) => {
         && alternatives[0].length === 3
         && alternatives[1].length === 1
         && alternatives[0][0].type === 'name'
-        && alternatives[0][1].type === 'name'
         && isEqual(alternatives[0][0], alternatives[1][0])
         && isEqualName(alternatives[0][2], name)
 }
@@ -130,8 +129,9 @@ const stringifyRule = (rule) => {
         const [ item ] = alternatives[0]
         body = `{type: "many", predict: () => ${item.data}, fn: true}`
     } else if (isUntil(alternatives, name)) {
-        const [ item, nextItem ] = alternatives[0]
-        body = `{type: "until", predict: () => ({ predict: ${item.data}, hasNextPredict: ${nextItem.data} }), fn: true}`
+        alternatives = [alternatives[0].slice(0, 2), alternatives[1]]
+        const predict = stringifyAlternatives(alternatives)
+        body = `{type: "many", predict: ${predict}}`
     } else if (isMany2(alternatives, name)) {
         alternatives = alternatives.map(d => d.slice(0, -1))
         const predict = stringifyAlternatives(alternatives)
